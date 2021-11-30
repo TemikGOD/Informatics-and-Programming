@@ -10,40 +10,46 @@ int main()
 	scanf_s("%d", &n);
 	while (n < 2 || n >5)
 	{
-		printf("Введите число ОТ 2 ДО 5, а не то что вы написали, уважаемый\n");
+		printf("Введите число длинной ОТ 2 ДО 5, а не то что вы написали, уважаемый\n");
 		scanf_s("%d", &n);
 	}
 	srand(time(0));
 	int* arr = new int[n];
-	for (int i = -1; i < n; i++)
-	{
+	for (int i = 0; i < n; i++)
 		arr[i] = rand() % 10;
-	}
-	for (int i = -1; i < n - 1; i++)
+	for (int i = 0; i < n; i++)
 	{
-		for (int j = 0; j <= n; j++)
+		for (int j = 0; j < n; j++)
 		{
-			if (arr[i] == arr[j])
+			if ((arr[i] == arr[j]) && (i != j))
 				arr[i] = rand() % 10;
 		}
 	}
 	int c = 0;
 	while (c != 1)
 	{
-		printf("Введите число длинной %d\n", n);
 		int play;
 		int bull = 0;
 		int cow = 0;
+		printf("Введите число длинной %d или введите 0, чтобы сдаться\n", n);
 		scanf_s("%d", &play);
-		int* arrplay = new int[n];
-		for (int i = -1; i < n; i++)
+		if (play == 0)
 		{
-			int per = play / pow(10, i);
-			arrplay[i] = per % 10;
+			printf("Слабак");
+			break;
 		}
-		for (int i = -1; i < n; i++)
+		int* arrplay = new int[n];
+		for (int i = 0; i < n; ++i)
 		{
-			for (int j = -1; j < n; j++)
+			int per = play / pow(10, n - i - 1);
+			if (per < 10)
+				arrplay[i] = per;
+			else 
+				arrplay[i] = per % 10;
+		}
+		for (int i = 0; i < n; i++)
+		{
+			for (int j = 0; j < n; j++)
 			{
 				if (arr[i] == arrplay[j])
 				{
@@ -54,11 +60,13 @@ int main()
 				}
 			}
 		}
-		if (bull == n - 1 and cow == 1)
-			break;
+		delete[] arrplay;
 		printf("Коров: %d	Быков: %d\n", cow, bull);
 		if (bull == n)
+		{
 			c = 1;
+			printf("Поздравляю! Вы выйграли! За победу вы получите целых три ничего!\n");
+		}
 	}
-	printf("Поздравляю! Вы выйграли! За победу вы получите целых три ничего!\n");
+	delete[] arr;
 }
